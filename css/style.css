@@ -308,6 +308,12 @@ body.door-scene::after {
     min-height: 2.5rem;
 }
 
+.door-alert {
+    margin-top: 1rem;
+    min-height: 1.5rem;
+    font-weight: 600;
+}
+
 .keypad-hint {
     margin-top: 1rem;
 }

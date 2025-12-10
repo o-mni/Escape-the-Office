@@ -26,6 +26,7 @@
                         <div class="keypad-dots"></div>
                     </div>
                     <p class="muted keypad-hint">Tap the keypad to zoom in and enter the 4-digit code.</p>
+                    <div id="door-alert" class="door-alert muted" role="status" aria-live="polite"></div>
                 </div>
             </div>
         </div>
@@ -62,6 +63,7 @@
             const closeBtn = document.getElementById('keypad-close');
             const display = document.getElementById('keypad-display');
             const message = document.getElementById('keypad-message');
+            const doorAlert = document.getElementById('door-alert');
             let inputCode = '';
             let unlocked = false;
 
@@ -88,14 +90,17 @@
             function handleDoorClick() {
                 if (unlocked) {
                     doorStatus.innerHTML = 'The door slides open. Final flag: <span class="code">THM{escape_complete}</span>';
+                    doorAlert.textContent = 'Door already unlocked.';
                 } else {
                     doorStatus.textContent = 'Locked tight. You need the 4-digit code.';
+                    doorAlert.textContent = 'Door remains locked.';
                 }
             }
 
             function submitCode() {
                 if (inputCode.length !== 4) {
                     message.textContent = 'Need 4 digits.';
+                    doorAlert.textContent = 'Enter all 4 digits before submitting.';
                     return;
                 }
                 if (inputCode === correctCode) {
@@ -103,9 +108,11 @@
                     doorPanel.classList.add('door-open');
                     doorStatus.innerHTML = 'The door slides open. Final flag: <span class="code">THM{escape_complete}</span>';
                     message.textContent = 'Correct code! Door unlocked.';
+                    doorAlert.textContent = 'Correct code entered. Door unlocked.';
                     closeModal();
                 } else {
                     message.textContent = 'Incorrect code. Try again.';
+                    doorAlert.textContent = 'Wrong code. The lock resets.';
                     resetInput();
                 }
             }
