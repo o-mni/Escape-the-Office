@@ -22,44 +22,57 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3rem 1rem;
+    padding: 2rem;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
-    padding: 1rem;
+    padding: 0;
 }
 
 .workstation {
     position: relative;
     margin: 0 auto;
-    max-width: 720px;
-    padding: 2rem;
+    width: min(90vw, 1200px);
+    height: 90vh;
+    padding: 2rem 3rem;
     background: linear-gradient(120deg, #4b2d1f, #2c1b13);
     border-radius: 24px;
     box-shadow: 0 35px 60px rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .monitor-frame {
     background: linear-gradient(135deg, #e6e2d3, #cbc3ad);
-    padding: 2rem;
+    padding: 2.5rem;
     border: 4px solid #a9a089;
     border-radius: 18px;
     box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.35), 0 20px 40px rgba(0, 0, 0, 0.45);
+    width: 100%;
+    height: calc(100% - 90px);
+    display: flex;
+    flex-direction: column;
 }
 
 .monitor-screen {
     background-color: #05070d;
     border: 3px solid #15192a;
     border-radius: 8px;
-    padding: 1rem;
-    min-height: 420px;
+    padding: 1.25rem;
+    flex: 1;
     box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .monitor-panel {
     background-color: #0f1320;
+    width: min(90%, 540px);
+    margin: 0 auto;
 }
 
 .monitor-stand {
@@ -87,8 +100,8 @@ body {
 
 .sticky-note {
     position: absolute;
-    top: -10px;
-    right: 10px;
+    top: 1rem;
+    right: 2rem;
     background: #f4e28c;
     color: #2b1f04;
     padding: 0.75rem 1rem;
@@ -185,10 +198,15 @@ a.link:hover {
     }
     .workstation {
         padding: 1rem;
+        height: auto;
+        width: 100%;
     }
     .sticky-note {
         position: static;
         margin-top: 1rem;
         transform: rotate(0deg);
+    }
+    .monitor-frame {
+        height: auto;
     }
 }
