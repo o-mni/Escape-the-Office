@@ -17,17 +17,38 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: radial-gradient(circle at top, #1c2336 0%, #090b12 55%, #05070d 100%);
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 60px, transparent 60px 120px),
+        linear-gradient(180deg, #222a3c 0%, #181f2f 60%, #0c0906 60%, #0a0503 100%);
     color: var(--text);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30vh;
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 100px, rgba(0, 0, 0, 0.2) 100px 102px),
+        linear-gradient(180deg, #4a2d18 0%, #2a180b 60%, #1a0e05 100%);
+    box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .container {
     width: 100%;
     padding: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .workstation {
