@@ -6,37 +6,156 @@
     <title>Door Lock</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="door-scene">
     <div class="container">
-        <div class="panel">
-            <h1>Exit Door Lock</h1>
-            <p>You face the exit door. Its electronic lock waits for a four-digit code. The workstation hinted that a security camera snapshot named <span class="code">room_key.jpg</span> hides the answer.</p>
-            <form id="door-form">
-                <label for="door-code">Enter Code</label>
-                <input type="text" id="door-code" maxlength="4" autocomplete="off" required>
-                <button type="submit" class="btn">Unlock</button>
-            </form>
-            <div id="door-message" class="muted"></div>
+        <div class="panel door-console">
+            <h1>Exit Door Controls</h1>
+            <p>The reinforced door dominates the hallway. The workstation logs mentioned a security camera snapshot named <span class="code">room_key.jpg</span> that might hide the code. Tap the keypad to punch in the digits.</p>
+            <div class="door-layout">
+                <div class="door-area">
+                    <div class="exit-door" id="exit-door" role="button" aria-label="Locked door" tabindex="0">
+                        <div class="door-window"></div>
+                        <button class="door-handle" id="door-handle" aria-label="Try handle"></button>
+                    </div>
+                    <p id="door-status" class="muted door-status">The door is locked. Maybe the keypad has the answer.</p>
+                </div>
+                <div class="keypad-area">
+                    <div class="keypad-preview" id="keypad-preview" role="button" aria-label="Open keypad" tabindex="0">
+                        <div class="keypad-dots"></div>
+                        <div class="keypad-dots"></div>
+                        <div class="keypad-dots"></div>
+                    </div>
+                    <p class="muted keypad-hint">Tap the keypad to zoom in and enter the 4-digit code.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="keypad-modal" id="keypad-modal" role="dialog" aria-modal="true" aria-label="Enter keypad code">
+        <div class="keypad">
+            <div class="keypad-display" id="keypad-display">____</div>
+            <div class="key-grid">
+                <button class="key" data-key="1">1</button>
+                <button class="key" data-key="2">2</button>
+                <button class="key" data-key="3">3</button>
+                <button class="key" data-key="4">4</button>
+                <button class="key" data-key="5">5</button>
+                <button class="key" data-key="6">6</button>
+                <button class="key" data-key="7">7</button>
+                <button class="key" data-key="8">8</button>
+                <button class="key" data-key="9">9</button>
+                <button class="key action" data-action="clear">Clear</button>
+                <button class="key" data-key="0">0</button>
+                <button class="key action" data-action="submit">Enter</button>
+            </div>
+            <button class="keypad-close" id="keypad-close" aria-label="Close keypad">&times;</button>
+            <div id="keypad-message" class="muted"></div>
         </div>
     </div>
     <script>
         (function() {
-            const form = document.getElementById('door-form');
-            const message = document.getElementById('door-message');
             const correctCode = '4392';
+            const doorPanel = document.getElementById('exit-door');
+            const doorStatus = document.getElementById('door-status');
+            const handle = document.getElementById('door-handle');
+            const preview = document.getElementById('keypad-preview');
+            const modal = document.getElementById('keypad-modal');
+            const closeBtn = document.getElementById('keypad-close');
+            const display = document.getElementById('keypad-display');
+            const message = document.getElementById('keypad-message');
+            let inputCode = '';
+            let unlocked = false;
 
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const guess = document.getElementById('door-code').value.trim();
+            function updateDisplay() {
+                const padded = inputCode.padEnd(4, '_');
+                display.textContent = padded;
+            }
 
-                if (guess === correctCode) {
-                    message.classList.remove('error');
-                    message.innerHTML = 'The keypad beeps happily and the door unlocks. Final flag: <span class="code">THM{escape_complete}</span>';
+            function resetInput() {
+                inputCode = '';
+                updateDisplay();
+                message.textContent = '';
+            }
+
+            function openModal() {
+                modal.classList.add('open');
+                resetInput();
+            }
+
+            function closeModal() {
+                modal.classList.remove('open');
+            }
+
+            function handleDoorClick() {
+                if (unlocked) {
+                    doorStatus.innerHTML = 'The door slides open. Final flag: <span class="code">THM{escape_complete}</span>';
                 } else {
-                    message.classList.add('error');
-                    message.textContent = 'The keypad flashes red. That code is incorrect.';
+                    doorStatus.textContent = 'Locked tight. You need the 4-digit code.';
+                }
+            }
+
+            function submitCode() {
+                if (inputCode.length !== 4) {
+                    message.textContent = 'Need 4 digits.';
+                    return;
+                }
+                if (inputCode === correctCode) {
+                    unlocked = true;
+                    doorPanel.classList.add('door-open');
+                    doorStatus.innerHTML = 'The door slides open. Final flag: <span class="code">THM{escape_complete}</span>';
+                    message.textContent = 'Correct code! Door unlocked.';
+                    closeModal();
+                } else {
+                    message.textContent = 'Incorrect code. Try again.';
+                    resetInput();
+                }
+            }
+
+            function bindPseudoButton(element, handler) {
+                if (!element) return;
+                element.addEventListener('click', handler);
+                element.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        handler();
+                    }
+                });
+            }
+
+            handle.addEventListener('click', handleDoorClick);
+            bindPseudoButton(doorPanel, handleDoorClick);
+            bindPseudoButton(preview, openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
                 }
             });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal.classList.contains('open')) {
+                    closeModal();
+                }
+            });
+
+            document.querySelectorAll('.key').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const key = button.getAttribute('data-key');
+                    const action = button.getAttribute('data-action');
+                    if (action === 'clear') {
+                        resetInput();
+                        return;
+                    }
+                    if (action === 'submit') {
+                        submitCode();
+                        return;
+                    }
+                    if (key && inputCode.length < 4) {
+                        inputCode += key;
+                        updateDisplay();
+                    }
+                });
+            });
+
+            updateDisplay();
         })();
     </script>
 </body>
