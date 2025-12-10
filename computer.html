@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Workstation Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- The intern left a file on the server: /files/fruit.txt -->
+    <div class="container">
+        <div class="workstation">
+            <div class="monitor-frame">
+                <div class="monitor-screen">
+                    <div class="panel monitor-panel">
+                        <h1>Company Workstation</h1>
+                        <p>The workstation flickers to life, asking for credentials. Maybe the intern left something helpful.</p>
+                        <form id="login-form">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" autocomplete="off" required>
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <button type="submit" class="btn">Login</button>
+                        </form>
+                        <p>Shared files: <a href="files/room_key.jpg" class="link" download>room_key.jpg</a> (Security Camera Snapshot)</p>
+                        <div id="message" class="muted"></div>
+                    </div>
+                </div>
+                <div class="monitor-stand"></div>
+            </div>
+            <div class="sticky-note" role="note" aria-label="Sticky note reminder">
+                <span>Password reminder:<br><strong>my favorite fruit</strong></span>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const form = document.getElementById('login-form');
+            const messageBox = document.getElementById('message');
+            const correctUser = 'intern';
+            const correctPass = 'apple';
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const username = form.username.value.trim().toLowerCase();
+                const password = form.password.value.trim().toLowerCase();
+
+                if (username === correctUser && password === correctPass) {
+                    messageBox.classList.remove('error');
+                    messageBox.textContent = 'You are now logged in as intern. You see a folder called Security Camera Snapshots with a file named room_key.jpg. Download it to look for hidden information... Redirecting to the door controls.';
+                    setTimeout(function() {
+                        window.location.href = 'door.html';
+                    }, 1800);
+                } else {
+                    messageBox.classList.add('error');
+                    messageBox.textContent = 'Access denied. Try another username/password combination.';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

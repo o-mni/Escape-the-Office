@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Door Lock</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <h1>Exit Door Lock</h1>
+            <p>You face the exit door. Its electronic lock waits for a four-digit code. The workstation hinted that a security camera snapshot named <span class="code">room_key.jpg</span> hides the answer.</p>
+            <form id="door-form">
+                <label for="door-code">Enter Code</label>
+                <input type="text" id="door-code" maxlength="4" autocomplete="off" required>
+                <button type="submit" class="btn">Unlock</button>
+            </form>
+            <div id="door-message" class="muted"></div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const form = document.getElementById('door-form');
+            const message = document.getElementById('door-message');
+            const correctCode = '4392';
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const guess = document.getElementById('door-code').value.trim();
+
+                if (guess === correctCode) {
+                    message.classList.remove('error');
+                    message.innerHTML = 'The keypad beeps happily and the door unlocks. Final flag: <span class="code">THM{escape_complete}</span>';
+                } else {
+                    message.classList.add('error');
+                    message.textContent = 'The keypad flashes red. That code is incorrect.';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
