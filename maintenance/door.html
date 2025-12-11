@@ -52,6 +52,14 @@
             <div id="keypad-message" class="muted"></div>
         </div>
     </div>
+    <div class="flag-overlay" id="flag-overlay" aria-hidden="true">
+        <div class="flag-content">
+            <h2>Door Unlocked</h2>
+            <p id="flag-text">Flag: <span class="code">THM{escape_complete}</span></p>
+            <button id="copy-flag" class="btn">Copy Flag</button>
+            <p id="copy-feedback" class="muted" aria-live="polite"></p>
+        </div>
+    </div>
     <script>
         (function() {
             const correctCode = '4392';
@@ -64,6 +72,10 @@
             const display = document.getElementById('keypad-display');
             const message = document.getElementById('keypad-message');
             const doorAlert = document.getElementById('door-alert');
+            const flagOverlay = document.getElementById('flag-overlay');
+            const flagText = document.getElementById('flag-text');
+            const copyButton = document.getElementById('copy-flag');
+            const copyFeedback = document.getElementById('copy-feedback');
             let inputCode = '';
             let unlocked = false;
 
@@ -109,6 +121,7 @@
                     doorStatus.innerHTML = 'The door slides open. Final flag: <span class="code">THM{escape_complete}</span>';
                     message.textContent = 'Correct code! Door unlocked.';
                     doorAlert.textContent = 'Correct code entered. Door unlocked.';
+                    showFlagOverlay();
                     closeModal();
                 } else {
                     message.textContent = 'Incorrect code. Try again.';
@@ -116,6 +129,25 @@
                     resetInput();
                 }
             }
+
+            function showFlagOverlay() {
+                flagOverlay.classList.add('visible');
+                flagOverlay.setAttribute('aria-hidden', 'false');
+                flagText.innerHTML = 'Flag: <span class="code">THM{escape_complete}</span>';
+            }
+
+            copyButton.addEventListener('click', function() {
+                const flag = 'THM{escape_complete}';
+                if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(flag).then(function() {
+                        copyFeedback.textContent = 'Flag copied to clipboard.';
+                    }).catch(function() {
+                        copyFeedback.textContent = 'Unable to copy automatically. Copy it manually: THM{escape_complete}';
+                    });
+                } else {
+                    copyFeedback.textContent = 'Clipboard unavailable. Copy manually: THM{escape_complete}';
+                }
+            });
 
             function bindPseudoButton(element, handler) {
                 if (!element) return;
