@@ -57,6 +57,7 @@
             <h2>Door Unlocked</h2>
             <p id="flag-text">Flag: <span class="code">THM{escape_complete}</span></p>
             <button id="copy-flag" class="btn">Copy Flag</button>
+            <button id="close-flag" class="btn secondary">Close</button>
             <p id="copy-feedback" class="muted" aria-live="polite"></p>
         </div>
     </div>
@@ -76,6 +77,7 @@
             const flagText = document.getElementById('flag-text');
             const copyButton = document.getElementById('copy-flag');
             const copyFeedback = document.getElementById('copy-feedback');
+            const closeButton = document.getElementById('close-flag');
             let inputCode = '';
             let unlocked = false;
 
@@ -136,6 +138,12 @@
                 flagText.innerHTML = 'Flag: <span class="code">THM{escape_complete}</span>';
             }
 
+            function hideFlagOverlay() {
+                flagOverlay.classList.remove('visible');
+                flagOverlay.setAttribute('aria-hidden', 'true');
+                copyFeedback.textContent = '';
+            }
+
             copyButton.addEventListener('click', function() {
                 const flag = 'THM{escape_complete}';
                 if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
@@ -146,6 +154,18 @@
                     });
                 } else {
                     copyFeedback.textContent = 'Clipboard unavailable. Copy manually: THM{escape_complete}';
+                }
+            });
+
+            closeButton.addEventListener('click', hideFlagOverlay);
+            flagOverlay.addEventListener('click', function(event) {
+                if (event.target === flagOverlay) {
+                    hideFlagOverlay();
+                }
+            });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && flagOverlay.classList.contains('visible')) {
+                    hideFlagOverlay();
                 }
             });
 
