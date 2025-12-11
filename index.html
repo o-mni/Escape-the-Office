@@ -7,22 +7,21 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Note to self: login username is intern -->
     <div class="container">
         <div class="board">
             <div class="board-frame">
                 <div class="push-pin"></div>
                 <div class="note-paper">
                     <h1>Escape the Office</h1>
-                    <p>You jolt awake at a cluttered desk. The fluorescent lights hum overhead while a silent exit door blinks with a locked keypad. On the desk rests an old workstation that belonged to a mysterious intern rumored to hide clues in the system.</p>
-                    <p>If you want out, you will need to dig through whatever the intern left behind. The door stays locked until the keypad code is discovered.</p>
-                    <a class="btn" href="computer.html">Use the computer</a>
+                    <p>You jolt awake at a cluttered desk. The fluorescent lights hum overhead while a silent exit door blinks with a locked keypad. The only thing on the desk is a corkboard covered in clues from the old maintenance crew.</p>
+                    <p>The crew bragged that the door controls were buried in a directory so boring that only a directory brute-forcer would ever discover it. No direct links. No breadcrumbs. Just a hidden subdirectory that still serves the keypad UI.</p>
+                    <p class="muted hint riddle">Riddle: "When the janitors lock a memory, sweep every hallway with GoBuster. Find the chamber where gears are serviced, speak its name aloud, append <span class="code">/door.html</span>, and the keypad will answer." </p>
                 </div>
                 <div class="tape tape-left"></div>
                 <div class="tape tape-right"></div>
             </div>
         </div>
-        <p class="muted hint">Hint: In many CTFs, viewing the page source can reveal secrets.</p>
+        <p class="muted hint">Hint: Start by scanning directories (e.g., <span class="code">gobuster dir -u http://localhost:8000 -w wordlist.txt</span>) until you discover the maintenance wing.</p>
     </div>
 </body>
 </html>
