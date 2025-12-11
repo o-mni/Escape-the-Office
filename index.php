@@ -1,3 +1,6 @@
+<?php
+// Landing page rendered via PHP so clues stay outside static HTML hosting.
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +26,8 @@
                         subdirectory that still serves the keypad UI.</p>
                     <p class="muted hint riddle">Riddle: "When the janitors lock a memory, sweep every hallway with
                         GoBuster. Find the chamber where gears are serviced, speak its name aloud, append <span
-                            class="code">/door.html</span>, and the keypad will answer." </p>
+                            class="code">/door.php</span> (the relic <span class="code">door.html</span> still points
+                        there), and the keypad will answer." </p>
                 </div>
                 <div class="tape tape-left"></div>
                 <div class="tape tape-right"></div>
