@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maintenance Door Lock</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body class="door-scene">
     <div class="container">
         <div class="panel door-console">
             <h1>Exit Door Controls</h1>
-            <p>You found the maintenance wing. The reinforced door dominates the hallway. The workstation logs mentioned a security camera snapshot named <span class="code">room_key.jpg</span> that might hide the code. Tap the keypad to punch in the digits.</p>
+            <p>You found the maintenance wing, but this panel won't surrender that easily. The reinforced door dominates
+                the hallway, humming with dormant power.</p>
+            <p class="muted">Riddle: "The janitor's log whispers, 'inspect the unseen ink.' Peek behind the rendered
+                paint—buried in the source lies the credential trail."</p>
+            <!-- Maintenance Note: Username 'intern' still uses that weak common password. Remind them to change it ASAP. -->
             <div class="door-layout">
                 <div class="door-area">
                     <div class="exit-door" id="exit-door" role="button" aria-label="Locked door" tabindex="0">
                         <div class="door-window"></div>
                         <button class="door-handle" id="door-handle" aria-label="Try handle"></button>
                     </div>
-                    <p id="door-status" class="muted door-status">The door is locked. Maybe the keypad has the answer.</p>
+                    <p id="door-status" class="muted door-status">The door is locked. Maybe the keypad has the answer.
+                    </p>
                 </div>
                 <div class="keypad-area">
                     <div class="keypad-preview" id="keypad-preview" role="button" aria-label="Open keypad" tabindex="0">
@@ -62,7 +69,7 @@
         </div>
     </div>
     <script>
-        (function() {
+        (function () {
             const correctCode = '4392';
             const doorPanel = document.getElementById('exit-door');
             const doorStatus = document.getElementById('door-status');
@@ -144,12 +151,12 @@
                 copyFeedback.textContent = '';
             }
 
-            copyButton.addEventListener('click', function() {
+            copyButton.addEventListener('click', function () {
                 const flag = 'THM{escape_complete}';
                 if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(flag).then(function() {
+                    navigator.clipboard.writeText(flag).then(function () {
                         copyFeedback.textContent = 'Flag copied to clipboard.';
-                    }).catch(function() {
+                    }).catch(function () {
                         copyFeedback.textContent = 'Unable to copy automatically. Copy it manually: THM{escape_complete}';
                     });
                 } else {
@@ -158,12 +165,12 @@
             });
 
             closeButton.addEventListener('click', hideFlagOverlay);
-            flagOverlay.addEventListener('click', function(event) {
+            flagOverlay.addEventListener('click', function (event) {
                 if (event.target === flagOverlay) {
                     hideFlagOverlay();
                 }
             });
-            document.addEventListener('keydown', function(event) {
+            document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape' && flagOverlay.classList.contains('visible')) {
                     hideFlagOverlay();
                 }
@@ -172,7 +179,7 @@
             function bindPseudoButton(element, handler) {
                 if (!element) return;
                 element.addEventListener('click', handler);
-                element.addEventListener('keydown', function(event) {
+                element.addEventListener('keydown', function (event) {
                     if (event.key === 'Enter' || event.key === ' ') {
                         event.preventDefault();
                         handler();
@@ -184,19 +191,19 @@
             bindPseudoButton(doorPanel, handleDoorClick);
             bindPseudoButton(preview, openModal);
             closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', function(event) {
+            modal.addEventListener('click', function (event) {
                 if (event.target === modal) {
                     closeModal();
                 }
             });
-            document.addEventListener('keydown', function(event) {
+            document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape' && modal.classList.contains('open')) {
                     closeModal();
                 }
             });
 
-            document.querySelectorAll('.key').forEach(function(button) {
-                button.addEventListener('click', function() {
+            document.querySelectorAll('.key').forEach(function (button) {
+                button.addEventListener('click', function () {
                     const key = button.getAttribute('data-key');
                     const action = button.getAttribute('data-action');
                     if (action === 'clear') {
@@ -218,4 +225,5 @@
         })();
     </script>
 </body>
+
 </html>
