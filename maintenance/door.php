@@ -17,9 +17,9 @@
             <h1>Exit Door Controls</h1>
             <p>You found the maintenance wing, but this panel won't surrender that easily. The reinforced door dominates
                 the hallway, humming with dormant power.</p>
-            <p class="muted">Riddle: "The janitor's log whispers, 'inspect the unseen ink.' Peek behind the rendered
-                paintƒ?"buried in the source lies the credential trail."</p>
-            <!-- Maintenance Note: Username 'intern' still uses that weak common password. Remind them to change it ASAP. -->
+            <p class="muted">Riddle: "The janitor's log whispers, 'scan the smudged blueprint hidden in the evidence
+                crate; the digits glow when light bends twice.' Whatever clue the maintenance crew left inside those
+                artifacts should expose the code."</p>
             <div class="door-layout">
                 <div class="door-area">
                     <div class="exit-door" id="exit-door" role="button" aria-label="Locked door" tabindex="0">
