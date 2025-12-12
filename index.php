@@ -25,8 +25,7 @@
                         directory brute-forcer would ever discover it. No direct links. No breadcrumbs. Just a hidden
                         subdirectory that still serves the keypad UI.</p>
                     <p class="muted hint riddle">Riddle: "When the janitors lock a memory, sweep every hallway with
-                        GoBuster. Find the chamber where gears are serviced, speak its name aloud, append <span
-                            class="code">/door.php</span>, and the keypad will answer." </p>
+                        GoBuster. Find the chamber where gears are serviced, speak its name aloud and the keypad will answer." </p>
                 </div>
                 <div class="tape tape-left"></div>
                 <div class="tape tape-right"></div>

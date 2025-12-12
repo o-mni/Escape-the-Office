@@ -153,6 +153,7 @@
                         unlocked = true;
                         currentFlag = result.flag || '';
                         doorPanel.classList.add('door-open');
+                        doorPanel.classList.remove('door-error');
                         doorStatus.innerHTML = 'The door slides open. Final flag secured.';
                         message.textContent = 'Correct code! Door unlocked.';
                         doorAlert.textContent = 'Correct code entered. Door unlocked.';
@@ -161,6 +162,8 @@
                     } else {
                         message.textContent = result.message || 'Incorrect code. Try again.';
                         doorAlert.textContent = 'Wrong code. The lock resets.';
+                        doorPanel.classList.remove('door-open');
+                        doorPanel.classList.add('door-error');
                         resetInput();
                     }
                 }).catch(function () {
